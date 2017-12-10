@@ -6,17 +6,17 @@ extern crate encoding;
 
 use std::ffi::{ CString, CStr };
 use self::encoding::{ Encoding, EncoderTrap, DecoderTrap };
-use self::encoding::all::GBK;
+use self::encoding::all::GB18030;
 
-macro_rules! gbk {
+macro_rules! gb18030 {
 	( $x: expr ) => (
-        CString::new(GBK.encode($x, EncoderTrap::Ignore).unwrap()).unwrap().into_raw()
+        CString::new(GB18030.encode($x, EncoderTrap::Ignore).unwrap()).unwrap().into_raw()
     )
 }
 
 macro_rules! utf8 {
     ( $x: expr ) => (
-        GBK.decode(CStr::from_ptr($x).to_bytes(), DecoderTrap::Ignore).unwrap()
+        GB18030.decode(CStr::from_ptr($x).to_bytes(), DecoderTrap::Ignore).unwrap()
     )
 }
 
@@ -64,8 +64,8 @@ pub struct App {
 impl App {
 
     pub fn log(&self, priority: LogPriority,/* category: &str,*/ content: &str) -> i32 {
-        let category = gbk!("lurebot"/*category*/);
-        let content = gbk!(content);
+        let category = gb18030!("lurebot"/*category*/);
+        let content = gb18030!(content);
         unsafe {
             CQ_addLog(self.authcode, priority as i32, category, content)
         }
@@ -76,7 +76,7 @@ impl App {
     }
 
     pub fn fatal(&self, err: &str) -> i32 {
-        let err = gbk!(err);
+        let err = gb18030!(err);
         unsafe {
             CQ_setFatal(self.authcode, err)
         }
@@ -124,7 +124,7 @@ impl App {
     }
 
     pub fn send_message(&self, chat: Chat, message: &str) -> i32 {
-        let message = gbk!(message);
+        let message = gb18030!(message);
         unsafe {
             match chat {
                 Chat::Private(qq) => CQ_sendPrivateMsg(self.authcode, qq, message),
@@ -157,7 +157,7 @@ impl App {
                     CQ_setGroupBan(self.authcode, group, qq, duration)
                 },
                 Identity::Anonymous(name) => unsafe {
-                    let name = gbk!(&name);
+                    let name = gb18030!(&name);
                     CQ_setGroupAnonymousBan(self.authcode, group, name, duration)
                 },
                 Identity::Whole => unsafe {
@@ -200,7 +200,7 @@ impl App {
     pub fn group_set_special_title(&self, chat: Chat, ident: Identity, title: &str, duration: i64) -> i32 {
         if let Chat::Group(group) = chat {
             if let Identity::Specific(qq) = ident {
-                let title = gbk!(title);
+                let title = gb18030!(title);
                 unsafe {
                     CQ_setGroupSpecialTitle(self.authcode, group, qq, title, duration)
                 }
@@ -217,7 +217,7 @@ impl App {
     pub fn group_set_card(&self, chat: Chat, ident: Identity, card: &str) -> i32 {
         if let Chat::Group(group) = chat {
             if let Identity::Specific(qq) = ident {
-                let card = gbk!(card);
+                let card = gb18030!(card);
                 unsafe {
                     CQ_setGroupCard(self.authcode, group, qq, card)
                 }
@@ -290,7 +290,7 @@ mod adapter;
 
 #[export_name="AppInfo"]
 pub extern "stdcall" fn AppInfo() -> *const i8 {
-    gbk!("9,me.icefla.lurebot_adapter")
+    gb18030!("9,me.icefla.lurebot_adapter")
 }
 
 #[export_name="Initialize"]
