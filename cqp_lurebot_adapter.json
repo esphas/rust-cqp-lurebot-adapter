@@ -1,0 +1,54 @@
+{
+  "ret": 1,
+  "apiver": 9,
+  "appid": "me.icefla.lurebot_adapter",
+  "name": "Lurebot Adapter",
+  "version": "0.1.0",
+  "version_id": 1,
+  "author": "esphas",
+  "description": "Lurebot Adapter",
+  "event": [
+    {
+      "id": 1001,
+      "type": 1001,
+      "name": "CQ Startup",
+      "priority": 30000,
+      "function": "Startup"
+    },
+    {
+      "id": 1002,
+      "type": 1002,
+      "name": "CQ Exit",
+      "priority": 30000,
+      "function": "Exit"
+    },
+    {
+      "id": 1003,
+      "type": 1003,
+      "name": "CQ App Enable",
+      "priority": 30000,
+      "function": "Enable"
+    },
+    {
+      "id": 1004,
+      "type": 1004,
+      "name": "CQ App Disable",
+      "priority": 30000,
+      "function": "Disable"
+    },
+    {
+      "id": 1,
+      "type": 21,
+      "name": "CQ Private Message",
+      "priority": 30000,
+      "function": "PrivateMessage"
+    }
+  ],
+  "menu": [
+  ],
+  "status": [
+  ],
+  "auth": [
+    106
+  ]
+}

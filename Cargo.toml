@@ -1,0 +1,12 @@
+[package]
+name = "cqp-lurebot-adapter"
+version = "0.1.0"
+authors = ["Esphas Kueen <esphas@hotmail.com>"]
+build = "build.rs"
+
+[dependencies]
+libc = "*"
+encoding = "*"
+
+[lib]
+crate-type = ["cdylib"]
